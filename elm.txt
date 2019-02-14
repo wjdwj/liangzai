@@ -1,0 +1,66 @@
+﻿1、keep-alive是vue内置的组件   可以使被包含的组件暴保留状态，避免重复渲染    
+	include - 字符串或正则表达，只有匹配的组件会被缓存
+	exclude - 字符串或正则表达式，任何匹配的组件都不会被缓存
+例如：// 组件 a
+	// 组件 a
+	export default {
+	  name: 'a',
+	  data () {
+ 	   return {}
+  	  }
+	}
+
+	<keep-alive include="a">
+  	                <component><!-- name 为 a 的组件将被缓存！ --></component>
+	</keep-alive>可以保留它的状态或避免重新渲染
+	<keep-alive exclude="a">
+		<component><!-- 除了 name 为 a 的组件都将被缓存！ --></component>
+	</keep-alive>可以保留它的状态或避免重新渲染
+
+	增加router.meta属性
+	 meta: {
+      	          keepAlive: true // 需要被缓存      如果是false的话，不需要被缓存
+   	 }
+
+2、signin-up=‘home’的用法 
+    		是当前组件的一个属性prpos，一般用来传输给子组件使用的 home一般是data或是function（属于父子通信的方法）
+3、polyline标签用来创建仅包含直线的形状
+4、svg 修改image的xmlns:xlink及图片的显隐
+5、@click.prevent   ——>阻止事件的默认行为
+6、XLink 文档命名空间被声明于文档的顶部   xlink:type="simple" 可创建简单的类似 HTML 的链接。
+    您也可以规定更多的复杂的链接（多方向链接），但是目前，我们仅使用简易链接。
+     xlink:href 属性规定了要链接的 URL，而 xlink:show 属性规定了在何处打开链接。xlink:show="new" 意味着链接（在此例中，是一幅图像）会在新窗口打开。
+7、vue自定义指令v-load-more实现上拉加载
+8、<hgroup> 标签用于对网页或区段（section）的标题进行组合。
+9、FastClick  在移动浏览器上发生介于轻敲及点击之间的指令时，能够减少300毫秒的延迟。
+	fastclick用法：1.将fastclick.js引入到html中
+    		      2.在body前边，也就是body加载之前，实例化一个fastclick.
+	js方法：if('addEventListener'indocument) {
+			document.addEventListener('DOMContentLoaded',function() {
+				FastClick.attach(document.body)
+    },false)}
+	jquery方法：前提引入jquery，$(function() {
+				FastClick.attach(document.body);
+			});
+3.对于contenteditable的元素，需要挂.needsclick的class钩子，让其触发原生事件
+
+
+10、async作为一个关键字放到函数前面，用于表示函数是一个异步函数，因为async就是异步的意思， 异步函数也就意味着该函数的执行不会阻塞后面代码的执行。
+      原来async 函数返回的是一个promise 对象，如果要获取到promise 返回值，我们应该用then 方法， 继续修改代码  
+      如果函数内部抛出错误， promise 对象有一个catch 方法进行捕获。
+11、nextTick的应用场景
+        	在Vue生命周期的created()钩子函数进行的DOM操作一定要放在Vue.nextTick()的回调函数中
+	在created()钩子函数执行的时候DOM 其实并未进行任何渲染，而此时进行DOM操作无异于徒劳，所以此处一定要将DOM操作的js代码放进Vue.nextTick()的回调函数中。
+	与之对应的就是mounted()钩子函数，因为该钩子函数执行时所有的DOM挂载和渲染都已完成，此时在该钩子函数中进行任何DOM操作都不会有问题 。
+
+
+	在数据变化后要执行的某个操作，而这个操作需要使用随数据改变而改变的DOM结构的时候，这个操作都应该放进Vue.nextTick()的回调函数中。
+具体原因在Vue的官方文档中详细解释：
+
+
+		Vue 异步执行 DOM 更新。只要观察到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。
+	如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作上非常重要。然后，在下一个的事件循环			“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部尝试对异步队列使用原生的 Promise.then 和MessageChannel，如果执行环境不支持，会采用 setTimeou                t(fn, 0)代替。
+
+例如，当你设置vm.someData = 'new value'，该组件不会立即重新渲染。当刷新队列时，组件会在事件循环队列清空时的下一个“tick”更新。多数情况我们不需要关	心这个过程，但是如果你想在 DOM 状态更新后做点什么，这就可能会有些棘手。虽然 Vue.js 通常鼓励开发人员沿着“数据驱动”的方式思考，避免直接接触 DOM，但是有时我	们确实要这么做。为了在数据变化之后等待 Vue 完成更新 DOM ，可以在数据变化之后立即使用Vue.nextTick(callback) 。这样回调函数在 DOM 更新完成后就会调用。
+12、
+
